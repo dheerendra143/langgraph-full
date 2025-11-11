@@ -25,8 +25,7 @@ graph.add_edge("hello", "bye")
 graph.add_edge("bye", END)
 
 runnable = graph.compile()
-display(runnable)
-output = runnable.invoke({"message": "Dheerendra"})
-print(output)
+# display(runnable)
 
-
+for chunk in runnable.stream({"message": "Bharath"},stream_mode="updates"):
+    print(chunk)
