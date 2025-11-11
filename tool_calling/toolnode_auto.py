@@ -10,7 +10,7 @@ from util.langgraph_util import display
 
 @tool
 def get_restaurant_recommendations(location: str):
-    """Provide a list"""
+    """Provide a list to give recommendations about a restaurant."""
     recommendations = {
         "munich": ["hof", "auhets", "Tantris"],
         "newyork": ["Le bernardin", "ambroise", "bistrot paul"],
@@ -48,7 +48,8 @@ workflow.add_node("tools", tool_node)
 
 workflow.add_edge(START, "agent")
 workflow.add_conditional_edges("agent", should_continue)
-workflow.add_edge("tools", "agent")
+workflow.add_edge("agent", "tools")
+
 
 
 checkpointer = MemorySaver()
@@ -59,9 +60,12 @@ display(graph)
 
 config = {"configurable": {"thread_id": "1"}}
 
+
+
 result = graph.invoke({
-        "messages": [HumanMessage(content="Can you recommend just one top restaurant in Paris?" "The response should contain just the restaurant name")],
+        "messages": [HumanMessage(content="Can you recommend just one top restaurant in munich?" "The response should contain just the restaurant name")],
     },config
 )
 
-print(result)
+
+print(result.get("messages")[-1].content)
