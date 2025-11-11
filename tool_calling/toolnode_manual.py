@@ -1,6 +1,9 @@
-from langchain_core.messages import HumanMessage
+from langchain_core.messages import AIMessage
 from langchain_core.tools import tool
 from langchain_ollama import ChatOllama
+from langgraph.prebuilt import ToolNode
+from langgraph.runtime import Runtime
+
 
 @tool
 def get_restaurant_recommendations(location: str):
@@ -16,16 +19,18 @@ def get_restaurant_recommendations(location: str):
 
 tools = [get_restaurant_recommendations]
 
-llm = ChatOllama(model="llama3.2")
-# llm = ChatOllama(model="gemma:2b")
+tool_node = ToolNode(tools = tools)
 
-llm_with_tools = llm.bind_tools(tools)
+message_with_tool_call = AIMessage(
+    content='',
+    tool_calls=[{'name': 'get_restaurant_recommendations', 'args': {'location': 'munich'}, 'id': '3e896282-6500-4877-bbed-779067c8b61f', 'type': 'tool_call'}]
+)
+#
+#
+result = tool_node.invoke({
+        "messages": [message_with_tool_call],
+    }, runtime=Runtime()
+)
 
-messages = [
-    HumanMessage("Recommend some restaurant in newyork")
-]
 
-
-llm_output = llm_with_tools.invoke(messages)
-
-print(llm_output)
+print(result)

@@ -1,5 +1,6 @@
 from typing import TypedDict
 from langgraph.graph import END, START, StateGraph
+from util.langgraph_util import display
 
 from basics.hello_world_pydantic import runnable
 
@@ -35,6 +36,7 @@ graph.add_edge("urgent", END)
 graph.add_edge("standard", END)
 
 runnable = graph.compile()
+display(runnable)
 
 print(runnable.invoke({
     "message": "Hello World, i need urgent help",
