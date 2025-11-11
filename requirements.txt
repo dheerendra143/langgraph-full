@@ -1,0 +1,11 @@
+langchain
+langgraph
+langchain-openai
+langchain-chroma
+langchain-community
+ipython
+psycopg
+langgraph-checkpoint-postgres
+chainlit
+fastapi
+uvicorn
