@@ -16,7 +16,6 @@ def get_restaurant_recommendations(location: str):
 
 tools = [get_restaurant_recommendations]
 
-# llm = ChatOpenAI()
 llm = ChatOllama(model="llama3.2")
 
 llm_with_tools = llm.bind_tools(tools)
