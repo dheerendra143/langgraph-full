@@ -1,12 +1,10 @@
-from langchain_community.chat_models import ChatOllama
 from langchain_core.messages import HumanMessage
 from langchain_core.tools import tool
-from langchain_openai import ChatOpenAI
-
+from langchain_ollama import ChatOllama
 
 @tool
 def get_restaurant_recommendations(location: str):
-    """Provide a list of restaurant recommendations for a given location"""
+    """Provide a list"""
     recommendations = {
         "munich": ["hof", "auhets", "Tantris"],
         "new york": ["Le bernardin", "ambroise", "bistrot paul"],
@@ -18,10 +16,8 @@ def get_restaurant_recommendations(location: str):
 
 tools = [get_restaurant_recommendations]
 
-llm = ChatOpenAI()
-
-# llm = ChatOpenAI(model="gemma:2b")
-# llm = ChatOllama(model="gemma:2b")
+# llm = ChatOpenAI()
+llm = ChatOllama(model="llama3.2")
 
 llm_with_tools = llm.bind_tools(tools)
 
@@ -30,6 +26,6 @@ messages = [
 ]
 
 
-llm_output = llm.invoke("what is the indial capital")
+llm_output = llm_with_tools.invoke(messages)
 
 print(llm_output)

@@ -3,6 +3,7 @@ langgraph
 langchain-openai
 langchain-chroma
 langchain-community
+langchain-ollama
 ipython
 psycopg
 langgraph-checkpoint-postgres
