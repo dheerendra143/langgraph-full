@@ -31,6 +31,7 @@ graph = StateGraph(SupportRequest)
 graph.add_node("urgent", handle_urgent)
 graph.add_node("standard", handle_standard)
 
+graph.add_edge(START, "urgent")
 graph.add_conditional_edges(START, categorize_request, {"high": "urgent", "low": "standard"})
 graph.add_edge("urgent", END)
 graph.add_edge("standard", END)
